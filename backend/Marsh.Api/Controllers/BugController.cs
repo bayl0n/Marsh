@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace Marsh.Api.Controllers;
 
 [ApiController]
-[Route("api/[controller]")]
+[Route("api/bugs")]
 public class BugController(MarshDbContext context) : ControllerBase
 {
     private readonly MarshDbContext _context = context;

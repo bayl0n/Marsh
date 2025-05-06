@@ -1,0 +1,19 @@
+<mat-card class="bug-card__wrapper" appearance="outlined">
+  <mat-card-header class="card-header">
+    <mat-card-title class="bug-card__title">{{ bug().title }}</mat-card-title>
+    <div class="bug-card__action-container">
+      <button class="bug-card__button" mat-icon-button aria-label="Settings">
+        <mat-icon>more_horiz</mat-icon>
+      </button>
+    </div>
+  </mat-card-header>
+  <mat-card-content> {{ bug().description }} </mat-card-content>
+  <mat-card-actions align="end">
+    <mat-checkbox
+      class="bug-card__checkbox"
+      [checked]="bug().isResolved"
+      labelPosition="before"
+      >Resolved</mat-checkbox
+    >
+  </mat-card-actions>
+</mat-card>

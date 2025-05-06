@@ -17,6 +17,18 @@ builder.Services.AddDbContext<MarshDbContext>(
         opt => opt.UseSqlite("Data Source=marsh.db")
     );
 
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowMarshAngular",
+        policy =>
+        {
+            policy.WithOrigins("http://localhost:4200")
+                .AllowAnyHeader()
+                .AllowAnyMethod()
+                .AllowCredentials();
+        });
+});
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -26,12 +38,14 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
+app.UseCors("AllowMarshAngular");
+
 app.UseHttpsRedirection();
 
 app.UseAuthorization();
 
 app.MapControllers();
 
-app.MapGet("api", () => "Hello World!");
+app.MapGet("api", () => "pong");
 
 app.Run();

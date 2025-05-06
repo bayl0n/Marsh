@@ -1,0 +1,13 @@
+.bug-list-container {
+  display: flex;
+  flex-direction: row;
+  gap: 1rem;
+}
+
+@media (max-width: 768px) {
+  .bug-list-container {
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+  }
+}

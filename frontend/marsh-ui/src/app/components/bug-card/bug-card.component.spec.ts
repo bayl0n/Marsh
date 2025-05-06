@@ -1,0 +1,23 @@
+import { ComponentFixture, TestBed } from '@angular/core/testing';
+
+import { BugCardComponent } from './bug-card.component';
+
+describe('BugCardComponent', () => {
+  let component: BugCardComponent;
+  let fixture: ComponentFixture<BugCardComponent>;
+
+  beforeEach(async () => {
+    await TestBed.configureTestingModule({
+      imports: [BugCardComponent]
+    })
+    .compileComponents();
+
+    fixture = TestBed.createComponent(BugCardComponent);
+    component = fixture.componentInstance;
+    fixture.detectChanges();
+  });
+
+  it('should create', () => {
+    expect(component).toBeTruthy();
+  });
+});

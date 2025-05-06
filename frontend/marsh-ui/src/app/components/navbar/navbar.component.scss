@@ -18,6 +18,10 @@
   display: block;
 }
 
+.logo {
+  font-weight: bolder;
+}
+
 /* Responsive breakpoints */
 @media (min-width: 768px) {
   .desktop-nav {
