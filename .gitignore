@@ -15,6 +15,7 @@ obj/
 .vscode/
 .vs/
 **/Properties/launchSettings.json
+*.DotSettings.user
 
 # ========= Frontend: Angular =========
 frontend/marsh-ui/node_modules/
