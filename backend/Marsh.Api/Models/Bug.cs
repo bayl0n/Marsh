@@ -1,8 +1,17 @@
-namespace backend.Models;
+using System.ComponentModel.DataAnnotations;
 
-public class TodoItem
+namespace Marsh.Api.Models;
+public class Bug
 {
     public long Id { get; set; }
+    
+    [MaxLength(255)]
     public string? Title { get; set; }
-    public bool IsComplete { get; set; }
+    
+    [MaxLength(2000)]
+    public string? Description { get; set; }
+    
+    public bool IsResolved { get; set; }
+    
+    public DateTime CreatedAt { get; set; }
 }

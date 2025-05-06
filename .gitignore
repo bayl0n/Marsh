@@ -16,6 +16,8 @@ obj/
 .vs/
 **/Properties/launchSettings.json
 *.DotSettings.user
+*.db-shm
+*.db-wal
 
 # ========= Frontend: Angular =========
 frontend/marsh-ui/node_modules/
