@@ -1,0 +1,6 @@
+@FirstDotNetApp_HostAddress = https://localhost:7213
+
+GET {{FirstDotNetApp_HostAddress}}/
+Accept: application/json
+
+###
