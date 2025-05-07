@@ -19,6 +19,11 @@ public class TicketController(MarshDbContext context) : ControllerBase
     [HttpPost]
     public async Task<IActionResult> PostTicket([FromBody] Ticket ticket)
     {
+        // TODO: Create a CreateTicketDto to handle this better
+        ticket.Id = 0;
+        ticket.IsResolved = false;
+        ticket.CreatedAt = DateTime.UtcNow;
+
         _context.Tickets.Add(ticket);
         await _context.SaveChangesAsync();
         

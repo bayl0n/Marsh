@@ -1,13 +1,13 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { Ticket } from '../models/ticket.model';
+import { CreateTicketDto, Ticket } from '../models/ticket.model';
 
 @Injectable({
   providedIn: 'root',
 })
 export class TicketService {
-  private baseUrl = 'https://localhost:7213/api/v1';
+  private baseUrl = 'http://10.0.0.66:5114/api/v1';
   private http = inject(HttpClient);
 
   getTickets(): Observable<Ticket[]> {
@@ -20,5 +20,9 @@ export class TicketService {
 
   putTicket(ticket: Ticket) {
     return this.http.put<Ticket>(`${this.baseUrl}/tickets`, ticket);
+  }
+
+  addTicket(ticket: CreateTicketDto) {
+    return this.http.post<Ticket>(`${this.baseUrl}/tickets`, ticket);
   }
 }

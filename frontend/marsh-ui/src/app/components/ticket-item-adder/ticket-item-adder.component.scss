@@ -1,0 +1,12 @@
+.ticket-adder {
+  &__content {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  &__actions {
+    margin-top: 8px;
+    float: right;
+  }
+}

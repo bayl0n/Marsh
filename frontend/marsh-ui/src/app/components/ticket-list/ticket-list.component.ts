@@ -1,6 +1,6 @@
 import { Component, signal } from '@angular/core';
 import { TicketService } from '../../services/ticket.service';
-import { Ticket } from '../../models/ticket.model';
+import { CreateTicketDto, Ticket } from '../../models/ticket.model';
 import { MatCardModule } from '@angular/material/card';
 import { TicketItemComponent } from '../ticket-item/ticket-item.component';
 import {
@@ -10,10 +10,17 @@ import {
   CdkDrag,
   CdkDropList,
 } from '@angular/cdk/drag-drop';
+import { TicketItemAdderComponent } from '../ticket-item-adder/ticket-item-adder.component';
 
 @Component({
   selector: 'app-ticket-list',
-  imports: [MatCardModule, TicketItemComponent, CdkDropList, CdkDrag],
+  imports: [
+    MatCardModule,
+    TicketItemComponent,
+    CdkDropList,
+    CdkDrag,
+    TicketItemAdderComponent,
+  ],
   templateUrl: './ticket-list.component.html',
   styleUrl: './ticket-list.component.scss',
 })
@@ -26,6 +33,15 @@ export class TicketListComponent {
     this.bugService.getTickets().subscribe({
       next: (data: Ticket[]) => {
         this.tickets = data;
+      },
+      error: (err) => console.log(err),
+    });
+  }
+
+  onAddTicket(ticket: CreateTicketDto) {
+    this.bugService.addTicket(ticket).subscribe({
+      next: (ticket) => {
+        this.tickets.push(ticket);
       },
       error: (err) => console.log(err),
     });

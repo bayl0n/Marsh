@@ -5,3 +5,8 @@ export interface Ticket {
   isResolved: boolean;
   createdAt: string;
 }
+
+export interface CreateTicketDto {
+  title: string;
+  description: string;
+}

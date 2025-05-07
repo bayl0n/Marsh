@@ -1,4 +1,4 @@
-<mat-card class="bug-list-wrapper">
+<mat-card class="ticket-list-wrapper">
   <mat-card-header>
     <mat-card-title> List Title </mat-card-title>
   </mat-card-header>
@@ -6,7 +6,7 @@
     cdkDropList
     [cdkDropListData]="tickets"
     (cdkDropListDropped)="drop($event)"
-    class="bug-list-container"
+    class="ticket-list-container"
   >
     @for (ticket of tickets; track $index) {
     <app-ticket-item
@@ -16,5 +16,6 @@
       cdkDrag
     />
     }
+    <app-ticket-item-adder (notifyAddTicket)="onAddTicket($event)" />
   </mat-card-content>
 </mat-card>
