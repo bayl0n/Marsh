@@ -1,6 +1,5 @@
 using Marsh.Api.Data;
 using Microsoft.EntityFrameworkCore;
-using Marsh.Api.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -46,6 +45,6 @@ app.UseAuthorization();
 
 app.MapControllers();
 
-app.MapGet("api", () => "pong");
+app.MapGet("api/v1", () => "pong");
 
 app.Run();

@@ -1,0 +1,20 @@
+<mat-card class="bug-list-wrapper">
+  <mat-card-header>
+    <mat-card-title> List Title </mat-card-title>
+  </mat-card-header>
+  <mat-card-content
+    cdkDropList
+    [cdkDropListData]="tickets"
+    (cdkDropListDropped)="drop($event)"
+    class="bug-list-container"
+  >
+    @for (ticket of tickets; track $index) {
+    <app-ticket-item
+      [ticket]="ticket"
+      (notifyDelete)="onDeleteTicket($event)"
+      (notifyToggleResolve)="onToggleResolve($event)"
+      cdkDrag
+    />
+    }
+  </mat-card-content>
+</mat-card>

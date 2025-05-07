@@ -1,7 +1,7 @@
 using System.ComponentModel.DataAnnotations;
 
 namespace Marsh.Api.Models;
-public class Bug
+public class Ticket
 {
     public int Id { get; set; }
     

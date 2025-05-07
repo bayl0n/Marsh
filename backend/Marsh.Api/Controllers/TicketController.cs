@@ -5,46 +5,46 @@ using Microsoft.AspNetCore.Mvc;
 namespace Marsh.Api.Controllers;
 
 [ApiController]
-[Route("api/v1/bugs")]
-public class TaskController(MarshDbContext context) : ControllerBase
+[Route("api/v1/tickets")]
+public class TicketController(MarshDbContext context) : ControllerBase
 {
     private readonly MarshDbContext _context = context;
 
     [HttpGet]
-    public IActionResult GetBugs()
+    public IActionResult GetTickets()
     {
-        return Ok(_context.Bugs);
+        return Ok(_context.Tickets);
     }
 
     [HttpPost]
-    public async Task<IActionResult> PostBug([FromBody] Bug bug)
+    public async Task<IActionResult> PostTicket([FromBody] Ticket ticket)
     {
-        _context.Bugs.Add(bug);
+        _context.Tickets.Add(ticket);
         await _context.SaveChangesAsync();
         
-        return CreatedAtAction(nameof(GetBugs), new { id = bug.Id }, bug);
+        return CreatedAtAction(nameof(GetTickets), new { id = ticket.Id }, ticket);
     }
 
     [HttpPut]
-    public async Task<IActionResult> PutBug([FromBody] Bug bug)
+    public async Task<IActionResult> PutTicket([FromBody] Ticket ticket)
     {
-        _context.Bugs.Update(bug);
+        _context.Tickets.Update(ticket);
         await _context.SaveChangesAsync();
         
-        return Ok(bug);
+        return Ok(ticket);
     }
 
     [HttpDelete("{id:int}")]
-    public async Task<IActionResult> DeleteBug(int id)
+    public async Task<IActionResult> DeleteTicket(int id)
     {
-        var bug = await _context.Bugs.FindAsync(id);
+        var ticket = await _context.Tickets.FindAsync(id);
         
-        if (bug == null)
+        if (ticket == null)
         {
             return NotFound();
         }
         
-        _context.Bugs.Remove(bug);
+        _context.Tickets.Remove(ticket);
         await _context.SaveChangesAsync();
         
         return NoContent();
