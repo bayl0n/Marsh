@@ -16,6 +16,7 @@ obj/
 .vs/
 **/Properties/launchSettings.json
 *.DotSettings.user
+*.db
 *.db-shm
 *.db-wal
 
