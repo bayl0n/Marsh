@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 namespace Marsh.Api.Models;
 public class Bug
 {
-    public long Id { get; set; }
+    public int Id { get; set; }
     
     [MaxLength(255)]
     public string? Title { get; set; }
