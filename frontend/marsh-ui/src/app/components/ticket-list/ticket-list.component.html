@@ -2,22 +2,26 @@
   <mat-card-header>
     <mat-card-title> List Title </mat-card-title>
   </mat-card-header>
-  <mat-card-content
-    cdkDropList
-    [cdkDropListData]="tickets"
-    (cdkDropListDropped)="drop($event)"
-    class="ticket-list__container"
-  >
-    @for (ticket of tickets; track $index) {
-    <app-ticket-item
-      [ticket]="ticket"
-      (notifyDelete)="onDeleteTicket($event)"
-      (notifyToggleResolve)="onToggleResolve($event)"
-      (notifyEdit)="onEditTicket($event)"
-      cdkDrag
-      [cdkDragStartDelay]="50"
-    />
-    }
+  <mat-card-content class="ticket-list__container">
+    <div
+      class="ticket-list__viewport"
+      cdkDropList
+      [cdkDropListData]="tickets"
+      (cdkDropListDropped)="drop($event)"
+      cdkScrollable
+      [cdkDropListAutoScrollDisabled]="false"
+    >
+      @for (ticket of tickets; track $index) {
+      <app-ticket-item
+        [ticket]="ticket"
+        (notifyDelete)="onDeleteTicket($event)"
+        (notifyToggleResolve)="onToggleResolve($event)"
+        (notifyEdit)="onEditTicket($event)"
+        cdkDrag
+        [cdkDragStartDelay]="50"
+      />
+      }
+    </div>
     <app-ticket-item-adder (notifyAddTicket)="onAddTicket($event)" />
   </mat-card-content>
 </mat-card>
