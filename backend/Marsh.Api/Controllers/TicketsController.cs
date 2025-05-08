@@ -5,8 +5,8 @@ using Microsoft.AspNetCore.Mvc;
 namespace Marsh.Api.Controllers;
 
 [ApiController]
-[Route("api/v1/tickets")]
-public class TicketController(MarshDbContext context) : ControllerBase
+[Route("api/v1/[controller]")]
+public class TicketsController(MarshDbContext context) : ControllerBase
 {
     private readonly MarshDbContext _context = context;
 

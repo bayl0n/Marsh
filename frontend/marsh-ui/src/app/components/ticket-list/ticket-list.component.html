@@ -6,14 +6,16 @@
     cdkDropList
     [cdkDropListData]="tickets"
     (cdkDropListDropped)="drop($event)"
-    class="ticket-list-container"
+    class="ticket-list__container"
   >
     @for (ticket of tickets; track $index) {
     <app-ticket-item
       [ticket]="ticket"
       (notifyDelete)="onDeleteTicket($event)"
       (notifyToggleResolve)="onToggleResolve($event)"
+      (notifyEdit)="onEditTicket($event)"
       cdkDrag
+      [cdkDragStartDelay]="50"
     />
     }
     <app-ticket-item-adder (notifyAddTicket)="onAddTicket($event)" />

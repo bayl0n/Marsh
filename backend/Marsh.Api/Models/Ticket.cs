@@ -1,8 +1,10 @@
 using System.ComponentModel.DataAnnotations;
+using Microsoft.EntityFrameworkCore;
 
 namespace Marsh.Api.Models;
 public class Ticket
 {
+    [Key]
     public int Id { get; set; }
     
     [MaxLength(255)]

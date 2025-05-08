@@ -56,12 +56,23 @@ export class TicketListComponent {
     });
   }
 
+  onEditTicket(ticket: Ticket) {
+    this.bugService.putTicket(ticket).subscribe({
+      next: (newTicket) => {
+        let index = this.tickets.findIndex((item) => item.id === newTicket.id);
+
+        this.tickets[index] = newTicket;
+      },
+      error: (err) => console.log(err),
+    });
+  }
+
   onToggleResolve(ticket: Ticket) {
     this.bugService.putTicket(ticket).subscribe({
-      next: (newBug: Ticket) => {
-        let index = this.tickets.findIndex((item) => item.id === newBug.id);
+      next: (newTicket: Ticket) => {
+        let index = this.tickets.findIndex((item) => item.id === newTicket.id);
 
-        this.tickets[index] = newBug;
+        this.tickets[index] = newTicket;
       },
       error: (err) => console.log(err),
     });

@@ -50,6 +50,7 @@ export class TicketItemAdderComponent {
 
   toggleAddContent() {
     this.addContent.set(!this.addContent());
+    navigator.vibrate(100);
   }
 
   hideAddContent() {
