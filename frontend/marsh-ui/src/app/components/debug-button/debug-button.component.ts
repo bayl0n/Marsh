@@ -17,6 +17,8 @@ export class DebugButtonComponent {
       // Optional: copy to clipboard
       navigator.clipboard.writeText(token);
     });
-    console.log(this.auth);
+
+    if (this.auth.currentUser) console.log(this.auth.currentUser);
+    else console.log('Current user is null.');
   }
 }

@@ -1,9 +1,9 @@
-import { Component } from '@angular/core';
+import { Component, effect } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { RouterLink } from '@angular/router';
 import { DebugButtonComponent } from '../debug-button/debug-button.component';
-import { Auth } from '@angular/fire/auth';
+import { toSignal } from '@angular/core/rxjs-interop';
 import { AuthService } from '../../services/auth.service';
 
 @Component({
@@ -18,7 +18,15 @@ import { AuthService } from '../../services/auth.service';
   styleUrl: './navbar.component.scss',
 })
 export class NavbarComponent {
-  constructor(private authService: AuthService) {}
+  readonly user;
+
+  constructor(private authService: AuthService) {
+    this.user = toSignal(this.authService.user$, { initialValue: null });
+
+    effect(() => {
+      console.log('User changed:', this.user());
+    });
+  }
 
   OnSignOut() {
     this.authService.logout();

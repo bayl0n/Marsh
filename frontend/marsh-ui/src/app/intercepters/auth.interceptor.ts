@@ -9,7 +9,6 @@ export const authInterceptor: HttpInterceptorFn = (req, next) => {
 
   // authState(auth) will emit `null` then your user (or vice versa),
   // so we take(1) to get whichever comes first.
-  console.log('Interceptor doing things right now');
   return authState(auth).pipe(
     take(1),
     switchMap((user) => {

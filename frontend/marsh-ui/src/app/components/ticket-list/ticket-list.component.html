@@ -11,7 +11,9 @@
       cdkScrollable
       [cdkDropListAutoScrollDisabled]="false"
     >
-      @for (ticket of tickets; track $index) {
+      @if (tickets.length == 0) {
+      <div class="empty-ticket-list">Create a ticket to get started!</div>
+      } @for (ticket of tickets; track $index) {
       <app-ticket-item
         [ticket]="ticket"
         (notifyDelete)="onDeleteTicket($event)"
