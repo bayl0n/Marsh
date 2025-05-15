@@ -3,6 +3,7 @@ using System;
 using Marsh.Api.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,9 +11,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Marsh.Api.Migrations
 {
     [DbContext(typeof(MarshDbContext))]
-    partial class MarshDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250514172806_MakeUserFieldsNullable")]
+    partial class MakeUserFieldsNullable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "9.0.4");

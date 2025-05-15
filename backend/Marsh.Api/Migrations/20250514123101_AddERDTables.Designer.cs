@@ -3,6 +3,7 @@ using System;
 using Marsh.Api.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,9 +11,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Marsh.Api.Migrations
 {
     [DbContext(typeof(MarshDbContext))]
-    partial class MarshDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250514123101_AddERDTables")]
+    partial class AddERDTables
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "9.0.4");
@@ -214,6 +217,7 @@ namespace Marsh.Api.Migrations
                         .HasColumnType("TEXT");
 
                     b.Property<string>("Email")
+                        .IsRequired()
                         .HasMaxLength(128)
                         .HasColumnType("TEXT");
 
@@ -223,10 +227,12 @@ namespace Marsh.Api.Migrations
                         .HasColumnType("TEXT");
 
                     b.Property<string>("FirstName")
+                        .IsRequired()
                         .HasMaxLength(64)
                         .HasColumnType("TEXT");
 
                     b.Property<string>("LastName")
+                        .IsRequired()
                         .HasMaxLength(64)
                         .HasColumnType("TEXT");
 
@@ -234,6 +240,7 @@ namespace Marsh.Api.Migrations
                         .HasColumnType("TEXT");
 
                     b.Property<string>("Username")
+                        .IsRequired()
                         .HasMaxLength(64)
                         .HasColumnType("TEXT");
 

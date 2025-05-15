@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { CreateTicketDto, Ticket } from '../models/ticket.model';
+import { Auth } from '@angular/fire/auth';
 
 @Injectable({
   providedIn: 'root',
@@ -9,6 +10,7 @@ import { CreateTicketDto, Ticket } from '../models/ticket.model';
 export class TicketService {
   private baseUrl = 'http://10.0.0.66:5114/api/v1';
   private http = inject(HttpClient);
+  private auth = inject(Auth);
 
   getTickets(): Observable<Ticket[]> {
     return this.http.get<Ticket[]>(`${this.baseUrl}/tickets`);

@@ -27,7 +27,6 @@ frontend/marsh-ui/.angular/
 frontend/marsh-ui/.angular-cache/
 frontend/marsh-ui/.env
 frontend/marsh-ui/.env.*.local
-frontend/marsh-ui/src/environments/environment.*.ts
 frontend/marsh-ui/.browserlistrc
 
 # Optional IDE files
@@ -53,3 +52,7 @@ pnpm-debug.log*
 *.db-shm
 *.db-wal
 *.db-journal
+
+
+# ========= Firebase =========
+serviceAccountKey.json

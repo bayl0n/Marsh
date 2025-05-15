@@ -1,7 +1,9 @@
 <mat-toolbar color="primary">
-  <span class="logo">Marsh</span>
+  <span class="logo" routerLink="/">Marsh</span>
   <span class="spacer"></span>
   <button mat-button routerLink="/">Home</button>
-  <button mat-button routerLink="about">About</button>
-  <button mat-button routerLink="contact">Contact</button>
+  <button mat-button routerLink="register">Register</button>
+  <button mat-button routerLink="login">Login</button>
+  <button mat-button (click)="OnSignOut()">Sign Out</button>
+  <app-debug-button />
 </mat-toolbar>

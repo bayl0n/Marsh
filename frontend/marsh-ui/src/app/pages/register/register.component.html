@@ -1,0 +1,48 @@
+<div class="login-container">
+  <mat-card>
+    <mat-card-title>Register</mat-card-title>
+    <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+      <mat-form-field appearance="fill" class="full-width">
+        <mat-label>Email</mat-label>
+        <input
+          matInput
+          formControlName="email"
+          type="email"
+          autocomplete="username"
+        />
+        <mat-error *ngIf="registerForm.get('email')?.hasError('required')">
+          Email is required
+        </mat-error>
+        <mat-error *ngIf="registerForm.get('email')?.hasError('email')">
+          Invalid email format
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field appearance="fill" class="full-width">
+        <mat-label>Password</mat-label>
+        <input
+          matInput
+          formControlName="password"
+          type="password"
+          autocomplete="new-password"
+        />
+        <mat-error *ngIf="registerForm.get('password')?.hasError('required')">
+          Password is required
+        </mat-error>
+      </mat-form-field>
+
+      <div *ngIf="errorMessage" class="error-message">{{ errorMessage }}</div>
+
+      <mat-card-actions align="end">
+        <button
+          mat-raised-button
+          color="primary"
+          type="submit"
+          [disabled]="registerForm.invalid"
+        >
+          Register
+        </button>
+      </mat-card-actions>
+    </form>
+  </mat-card>
+</div>

@@ -11,6 +11,7 @@ import {
   CdkDropList,
 } from '@angular/cdk/drag-drop';
 import { TicketItemAdderComponent } from '../ticket-item-adder/ticket-item-adder.component';
+import { delay } from 'rxjs';
 
 @Component({
   selector: 'app-ticket-list',
@@ -27,10 +28,10 @@ import { TicketItemAdderComponent } from '../ticket-item-adder/ticket-item-adder
 export class TicketListComponent {
   tickets: Ticket[] = [];
 
-  constructor(private bugService: TicketService) {}
+  constructor(private ticketService: TicketService) {}
 
   ngOnInit(): void {
-    this.bugService.getTickets().subscribe({
+    this.ticketService.getTickets().subscribe({
       next: (data: Ticket[]) => {
         this.tickets = data;
       },
@@ -39,7 +40,7 @@ export class TicketListComponent {
   }
 
   onAddTicket(ticket: CreateTicketDto) {
-    this.bugService.addTicket(ticket).subscribe({
+    this.ticketService.addTicket(ticket).subscribe({
       next: (ticket) => {
         this.tickets.push(ticket);
       },
@@ -48,7 +49,7 @@ export class TicketListComponent {
   }
 
   onDeleteTicket(id: number) {
-    this.bugService.deleteTicket(id).subscribe({
+    this.ticketService.deleteTicket(id).subscribe({
       next: () => {
         this.tickets = this.tickets.filter((b) => b.id !== id);
       },
@@ -57,7 +58,7 @@ export class TicketListComponent {
   }
 
   onEditTicket(ticket: Ticket) {
-    this.bugService.putTicket(ticket).subscribe({
+    this.ticketService.putTicket(ticket).subscribe({
       next: (newTicket) => {
         let index = this.tickets.findIndex((item) => item.id === newTicket.id);
 
@@ -68,7 +69,7 @@ export class TicketListComponent {
   }
 
   onToggleResolve(ticket: Ticket) {
-    this.bugService.putTicket(ticket).subscribe({
+    this.ticketService.putTicket(ticket).subscribe({
       next: (newTicket: Ticket) => {
         let index = this.tickets.findIndex((item) => item.id === newTicket.id);
 

@@ -22,6 +22,7 @@ public class TicketsController(MarshDbContext context) : ControllerBase
         // TODO: Create a CreateTicketDto to handle this better
         ticket.Id = 0;
         ticket.IsResolved = false;
+        ticket.IsArchived = false;
         ticket.CreatedAt = DateTime.UtcNow;
 
         _context.Tickets.Add(ticket);
@@ -33,6 +34,8 @@ public class TicketsController(MarshDbContext context) : ControllerBase
     [HttpPut]
     public async Task<IActionResult> PutTicket([FromBody] Ticket ticket)
     {
+        ticket.UpdatedAt = DateTime.UtcNow;
+        
         _context.Tickets.Update(ticket);
         await _context.SaveChangesAsync();
         
