@@ -35,4 +35,11 @@ public class UserService(MarshDbContext context)
         
         return newUser;
     }
+
+    public async Task<User?> GetUserAsync(int marshId)
+    {
+        var user = await _context.Users.FirstOrDefaultAsync(u => u.Id == marshId);
+
+        return user;
+    }
 }

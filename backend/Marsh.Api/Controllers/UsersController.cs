@@ -1,7 +1,7 @@
-using Marsh.Api.Data;
+using System.Security.Claims;
 using Marsh.Api.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 
 namespace Marsh.Api.Controllers;
 
@@ -9,24 +9,17 @@ namespace Marsh.Api.Controllers;
 [Route("api/v1/[controller]")]
 public class UsersController(UserService userService) : ControllerBase
 {
-    private readonly UserService _userService = userService;
-
     [HttpGet("me")]
+    [Authorize]
     public async Task<IActionResult> GetCurrentUser()
     {
-        var firebaseUid = HttpContext.Items["FirebaseUserId"] as string;
-
+        var firebaseUid = User.FindFirstValue(ClaimTypes.NameIdentifier);
         if (string.IsNullOrEmpty(firebaseUid))
-        {
             return Unauthorized("Missing Firebase UID");
-        }
-        
-        var user = await _userService.GetByFirebaseUidAsync(firebaseUid);
 
+        var user = await userService.GetByFirebaseUidAsync(firebaseUid);
         if (user == null)
-        {
             return NotFound("User not found");
-        }
 
         return Ok(new
         {
@@ -35,7 +28,19 @@ public class UsersController(UserService userService) : ControllerBase
             user.Email,
             user.FirstName,
             user.LastName,
-            user.CreatedAt
+            user.CreatedAt,
+            user.UpdatedAt,
         });
+    }
+
+    [HttpGet("{id:int}")]
+    [AllowAnonymous]
+    public async Task<IActionResult> GetUser(int id)
+    {
+        var user = await userService.GetUserAsync(id);
+        if (user == null)
+            return NotFound("User not found");
+
+        return Ok(user);
     }
 }

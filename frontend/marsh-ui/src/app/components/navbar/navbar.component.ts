@@ -1,10 +1,12 @@
-import { Component, effect } from '@angular/core';
+import { Component, effect, signal } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { RouterLink } from '@angular/router';
 import { DebugButtonComponent } from '../debug-button/debug-button.component';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { AuthService } from '../../services/auth.service';
+import { UserService } from '../../services/user.service';
+import { MarshUser } from '../../models/user.model';
 
 @Component({
   selector: 'app-navbar',
@@ -18,13 +20,28 @@ import { AuthService } from '../../services/auth.service';
   styleUrl: './navbar.component.scss',
 })
 export class NavbarComponent {
-  readonly user;
+  readonly firebaseUser;
+  appUser = signal<MarshUser | null>(null);
 
-  constructor(private authService: AuthService) {
-    this.user = toSignal(this.authService.user$, { initialValue: null });
+  constructor(
+    private authService: AuthService,
+    private userService: UserService
+  ) {
+    this.firebaseUser = toSignal(this.authService.user$, {
+      initialValue: null,
+    });
+
+    userService.getCurrentUser().subscribe({
+      next: (user) => {
+        this.appUser.set(user);
+      },
+      error: (error) => {
+        console.log(error);
+      },
+    });
 
     effect(() => {
-      console.log('User changed:', this.user());
+      console.log('User changed:', this.firebaseUser());
     });
   }
 
