@@ -46,7 +46,7 @@ export class RegisterComponent {
     const { email, password } = this.registerForm.value;
 
     this.authService
-      .register(email!, password!)
+      .registerEmail(email!, password!)
       .then(() => {
         console.log('Account Registered');
         this.errorMessage = null;

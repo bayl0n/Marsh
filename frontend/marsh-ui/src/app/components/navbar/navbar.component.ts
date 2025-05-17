@@ -31,17 +31,21 @@ export class NavbarComponent {
       initialValue: null,
     });
 
-    userService.getCurrentUser().subscribe({
+    effect(() => {
+      console.log('User changed:', this.firebaseUser());
+    });
+  }
+
+  ngOnInit(): void {
+    //Called after the constructor, initializing input properties, and the first call to ngOnChanges.
+    //Add 'implements OnInit' to the class.
+    this.userService.getCurrentUser().subscribe({
       next: (user) => {
         this.appUser.set(user);
       },
       error: (error) => {
         console.log(error);
       },
-    });
-
-    effect(() => {
-      console.log('User changed:', this.firebaseUser());
     });
   }
 

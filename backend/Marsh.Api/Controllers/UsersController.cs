@@ -1,4 +1,5 @@
 using System.Security.Claims;
+using Marsh.Api.DTOs.Users;
 using Marsh.Api.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -21,16 +22,17 @@ public class UsersController(UserService userService) : ControllerBase
         if (user == null)
             return NotFound("User not found");
 
-        return Ok(new
-        {
+        var userDto = new UserDto(
             user.Id,
             user.Username,
             user.Email,
             user.FirstName,
             user.LastName,
             user.CreatedAt,
-            user.UpdatedAt,
-        });
+            user.UpdatedAt
+        );
+
+        return Ok(userDto);
     }
 
     [HttpGet("{id:int}")]

@@ -51,7 +51,7 @@ export class LoginComponent {
     const { email, password } = this.loginForm.value;
 
     this.authService
-      .login(email!, password!)
+      .loginEmail(email!, password!)
       .then(() => {
         console.log('Logged in!');
         this.errorMessage = null;

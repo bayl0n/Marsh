@@ -10,9 +10,8 @@ public class User
     [Required]
     [MaxLength(128)]
     public string FirebaseUid { get; set; } = null!;
-    
-    [MaxLength(64)]
-    public string? Username { get; set; }
+
+    [MaxLength(64)] public string Username { get; set; } = null!;
     
     [MaxLength(128)]
     public string? Email { get; set; }

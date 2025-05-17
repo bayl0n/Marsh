@@ -1,47 +1,41 @@
-import {
-  Injectable,
-  EnvironmentInjector,
-  runInInjectionContext,
-} from '@angular/core';
+import { Injectable } from '@angular/core';
 import {
   Auth,
   signInWithEmailAndPassword,
+  signInAnonymously,
   createUserWithEmailAndPassword,
   signOut,
   User,
   authState,
+  UserCredential,
 } from '@angular/fire/auth';
-import { Observable } from 'rxjs';
+import { from, Observable } from 'rxjs';
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
   readonly user$: Observable<User | null>;
 
-  constructor(
-    private auth: Auth,
-    private injector: EnvironmentInjector // ← needed for runInInjectionContext
-  ) {
+  constructor(private auth: Auth) {
     this.user$ = authState(this.auth);
   }
 
-  login(email: string, password: string) {
-    return runInInjectionContext(this.injector, () =>
-      signInWithEmailAndPassword(this.auth, email, password)
-    );
+  loginEmail(email: string, password: string): Promise<UserCredential> {
+    return signInWithEmailAndPassword(this.auth, email, password);
   }
 
-  register(email: string, password: string) {
-    return runInInjectionContext(this.injector, () =>
-      createUserWithEmailAndPassword(this.auth, email, password)
-    );
+  loginAnonymously(): Promise<UserCredential> {
+    return signInAnonymously(this.auth);
   }
 
-  logout() {
-    return runInInjectionContext(this.injector, () => signOut(this.auth));
+  registerEmail(email: string, password: string): Promise<UserCredential> {
+    return createUserWithEmailAndPassword(this.auth, email, password);
   }
 
-  getToken() {
-    // reading a property is fine, but if you call other Firebase APIs here, wrap them too
-    return this.auth.currentUser?.getIdToken();
+  logout(): Promise<void> {
+    return signOut(this.auth);
+  }
+
+  getToken$(): Observable<string> {
+    return from(this.auth.currentUser!.getIdToken());
   }
 }
