@@ -4,12 +4,19 @@
     <span class="spacer"></span>
     @if (firebaseUser()) {
     <button mat-button>{{ appUser()?.username }}</button>
-    <button mat-button (click)="OnSignOut()">Sign Out</button>
+    <button mat-button (click)="OnSignOut()">
+      <mat-icon>logout</mat-icon>Sign Out
+    </button>
     <app-debug-button />
     } @else {
-    <button mat-button routerLink="/">Home</button>
-    <button mat-button routerLink="register">Register</button>
-    <button mat-button routerLink="login">Login</button>
+    <button mat-button routerLink="/"><mat-icon>home</mat-icon>Home</button>
+    <button mat-button routerLink="register">
+      <mat-icon>app_registration</mat-icon>Register
+    </button>
+    <button mat-button routerLink="login">
+      <mat-icon>login</mat-icon>
+      Login
+    </button>
     }
   </mat-toolbar-row>
 </mat-toolbar>

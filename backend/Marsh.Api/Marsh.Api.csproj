@@ -22,7 +22,6 @@
     </ItemGroup>
 
     <ItemGroup>
-      <Folder Include="DTOs\Projects\" />
       <Folder Include="Mappings\" />
     </ItemGroup>
 

@@ -88,6 +88,7 @@ builder.Services.AddSwaggerGen(c =>
 
 builder.Services.AddSingleton<FirebaseAuthService>();
 builder.Services.AddScoped<UserService>();
+builder.Services.AddScoped<ProjectService>();
 builder.Services.AddDbContext<MarshDbContext>(opt =>
     opt.UseSqlite("Data Source=marsh.db")
 );

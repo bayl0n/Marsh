@@ -7,6 +7,7 @@ import { toSignal } from '@angular/core/rxjs-interop';
 import { AuthService } from '../../services/auth.service';
 import { UserService } from '../../services/user.service';
 import { MarshUser } from '../../models/user.model';
+import { MatIconModule } from '@angular/material/icon';
 
 @Component({
   selector: 'app-navbar',
@@ -14,6 +15,7 @@ import { MarshUser } from '../../models/user.model';
     RouterLink,
     MatToolbarModule,
     MatButtonModule,
+    MatIconModule,
     DebugButtonComponent,
   ],
   templateUrl: './navbar.component.html',

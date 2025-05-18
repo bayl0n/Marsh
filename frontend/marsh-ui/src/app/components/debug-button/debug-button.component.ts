@@ -1,10 +1,11 @@
 import { Component } from '@angular/core';
 import { Auth } from '@angular/fire/auth';
 import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
 
 @Component({
   selector: 'app-debug-button',
-  imports: [MatButtonModule],
+  imports: [MatButtonModule, MatIconModule],
   templateUrl: './debug-button.component.html',
   styleUrl: './debug-button.component.scss',
 })
