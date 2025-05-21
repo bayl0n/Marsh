@@ -1,6 +1,7 @@
 using System.Security.Claims;
 using System.IdentityModel.Tokens.Jwt;
 using Marsh.Api.Data;
+using Marsh.Api.Mappings;
 using Marsh.Api.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
@@ -92,6 +93,8 @@ builder.Services.AddScoped<ProjectService>();
 builder.Services.AddDbContext<MarshDbContext>(opt =>
     opt.UseSqlite("Data Source=marsh.db")
 );
+
+builder.Services.AddAutoMapper(typeof(ApiMappingProfile));
 
 builder.Services.AddCors(o => o.AddPolicy("AllowMarshAngular", p =>
     p.WithOrigins("http://localhost:4200")

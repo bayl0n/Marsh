@@ -1,3 +1,4 @@
+using AutoMapper;
 using Marsh.Api.Data;
 using Marsh.Api.DTOs.Projects;
 using Marsh.Api.Models;
@@ -6,10 +7,11 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Marsh.Api.Services;
 
-public class ProjectService(MarshDbContext context, UserService userService) : ControllerBase
+public class ProjectService(MarshDbContext context, UserService userService, IMapper mapper) : ControllerBase
 {
     private readonly MarshDbContext _context = context;
     private readonly UserService _userService = userService;
+    private readonly IMapper _mapper = mapper;
 
     public async Task<Project> CreateProjectFromUserAsync(string firebaseUid, CreateProjectDto projectDto)
     {
@@ -51,5 +53,21 @@ public class ProjectService(MarshDbContext context, UserService userService) : C
             ).ToListAsync();
         
         return projects;
+    }
+
+    public async Task<Project?> UpdateUserProjectAsync(int projectId, int ownerId, UpdateProjectDto projectDto)
+    {
+        var project = await _context.Projects.FirstOrDefaultAsync(project => project.Id == projectId);
+        
+        if (project == null || project.OwnerId != ownerId)
+            throw new InvalidOperationException("Project not found or access denied");
+        
+        _mapper.Map(projectDto, project);
+        
+        project.UpdatedAt = DateTime.UtcNow;
+        
+        await _context.SaveChangesAsync();
+        
+        return project;
     }
 }

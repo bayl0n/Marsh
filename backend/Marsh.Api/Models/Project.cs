@@ -9,11 +9,13 @@ public class Project
     [MaxLength(255)]
     public string Title { get; set; } = null!;
     [MaxLength(2000)]
-    public string? Description { get; set; } = null!;
+    public string? Description { get; set; }
     [MaxLength(32)]
     public string Visibility { get; set; } = "public";
     
     public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
+    
+    public DateTime? UpdatedAt { get; set; }
     
     public int OwnerId { get; set; }
     public User Owner { get; set; } = null!;

@@ -1,4 +1,5 @@
 using System.Security.Claims;
+using AutoMapper;
 using Marsh.Api.DTOs.Users;
 using Marsh.Api.Services;
 using Microsoft.AspNetCore.Authorization;
@@ -8,8 +9,11 @@ namespace Marsh.Api.Controllers;
 
 [ApiController]
 [Route("api/v1/[controller]")]
-public class UsersController(UserService userService) : ControllerBase
+public class UsersController(UserService userService, IMapper mapper) : ControllerBase
 {
+    private readonly UserService _userService = userService;
+    private readonly IMapper _mapper = mapper;
+    
     [HttpGet("me")]
     [Authorize]
     public async Task<IActionResult> GetCurrentUser()
@@ -18,19 +22,11 @@ public class UsersController(UserService userService) : ControllerBase
         if (string.IsNullOrEmpty(firebaseUid))
             return Unauthorized("Missing Firebase UID");
 
-        var user = await userService.GetByFirebaseUidAsync(firebaseUid);
+        var user = await _userService.GetByFirebaseUidAsync(firebaseUid);
         if (user == null)
             return NotFound("User not found");
-
-        var userDto = new UserDto(
-            user.Id,
-            user.Username,
-            user.Email,
-            user.FirstName,
-            user.LastName,
-            user.CreatedAt,
-            user.UpdatedAt
-        );
+        
+        var userDto = _mapper.Map<UserDto>(user);
 
         return Ok(userDto);
     }
@@ -39,10 +35,34 @@ public class UsersController(UserService userService) : ControllerBase
     [AllowAnonymous]
     public async Task<IActionResult> GetUser(int id)
     {
-        var user = await userService.GetUserAsync(id);
+        var user = await _userService.GetUserAsync(id);
+        if (user == null)
+            return NotFound("User not found");
+        
+        var userDto = _mapper.Map<UserDto>(user);
+
+        return Ok(userDto);
+    }
+
+    [HttpPut("me")]
+    [Authorize]
+    public async Task<IActionResult> UpdateCurrentUser([FromBody] UpdateUserDto dto)
+    {
+        var firebaseUid = User.FindFirstValue(ClaimTypes.NameIdentifier);
+        
+        if (string.IsNullOrEmpty(firebaseUid))
+            return Unauthorized("Missing Firebase UID");
+        
+        var user = await _userService.GetByFirebaseUidAsync(firebaseUid);
+        
         if (user == null)
             return NotFound("User not found");
 
-        return Ok(user);
+        user.UpdatedAt = DateTime.UtcNow;
+        var newUser = await _userService.UpdateUserAsync(user.Id, dto);
+        
+        var newUserDto = _mapper.Map<UserDto>(newUser);
+        
+        return Ok(newUserDto);
     }
 }

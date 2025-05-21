@@ -1,12 +1,15 @@
+using AutoMapper;
 using Marsh.Api.Data;
+using Marsh.Api.DTOs.Users;
 using Marsh.Api.Models;
 using Microsoft.EntityFrameworkCore;
 
 namespace Marsh.Api.Services;
 
-public class UserService(MarshDbContext context)
+public class UserService(MarshDbContext context, IMapper mapper)
 {
     private readonly MarshDbContext _context = context;
+    private readonly IMapper _mapper = mapper;
 
     public async Task<User?> GetByFirebaseUidAsync(string firebaseUid)
     {
@@ -40,6 +43,16 @@ public class UserService(MarshDbContext context)
     {
         var user = await _context.Users.FirstOrDefaultAsync(u => u.Id == marshId);
 
+        return user;
+    }
+
+    public async Task<User?> UpdateUserAsync(int marshId, UpdateUserDto dto)
+    {
+        var user = await _context.Users.FirstOrDefaultAsync(u => u.Id == marshId);
+        
+        _mapper.Map(dto, user);
+        await _context.SaveChangesAsync();
+        
         return user;
     }
 }

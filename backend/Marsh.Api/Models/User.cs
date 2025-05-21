@@ -11,7 +11,8 @@ public class User
     [MaxLength(128)]
     public string FirebaseUid { get; set; } = null!;
 
-    [MaxLength(64)] public string Username { get; set; } = null!;
+    [MaxLength(64)]
+    public string Username { get; set; } = null!;
     
     [MaxLength(128)]
     public string? Email { get; set; }
@@ -23,7 +24,7 @@ public class User
     public string? LastName { get; set; }
     
     public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
-    public DateTime UpdatedAt { get; set; } = DateTime.UtcNow;
+    public DateTime? UpdatedAt { get; set; }
     
     public ICollection<Project> OwnedProjects { get; set; } = [];
     public ICollection<ProjectMember> ProjectMemberships { get; set; } = [];
