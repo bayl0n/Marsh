@@ -16,6 +16,27 @@ public class UserService(MarshDbContext context, IMapper mapper)
         return await _context.Users
             .FirstOrDefaultAsync(u => u.FirebaseUid == firebaseUid);
     }
+    
+    public async Task<User> CreateAsync(string firebaseUid, string? email)
+    {
+        var user = new User {
+            FirebaseUid = firebaseUid,
+            Email       = email,
+            Username    = $"user_{Guid.NewGuid().ToString()[..8]}",
+            CreatedAt   = DateTime.UtcNow,
+            UpdatedAt   = DateTime.UtcNow
+        };
+        _context.Users.Add(user);
+        await _context.SaveChangesAsync();
+        return user;
+    }
+    
+    public async Task<User> GetOrCreateByFirebaseUidAsync(string firebaseUid, string? email)
+    {
+        var user = await GetByFirebaseUidAsync(firebaseUid);
+        if (user != null) return user;
+        return await CreateAsync(firebaseUid, email);
+    }
 
     public async Task<User> SyncFirebaseUserAsync(string firebaseUid, string? email, string? username)
     {

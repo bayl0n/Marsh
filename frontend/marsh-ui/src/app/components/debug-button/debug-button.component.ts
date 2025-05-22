@@ -16,7 +16,7 @@ export class DebugButtonComponent {
     this.auth.currentUser?.getIdToken(true).then((token) => {
       console.log('✅ Firebase ID Token:', token);
       // Optional: copy to clipboard
-      navigator.clipboard.writeText(token);
+      navigator.clipboard.writeText('Bearer ' + token);
     });
 
     if (this.auth.currentUser) console.log(this.auth.currentUser);

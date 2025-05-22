@@ -11,6 +11,7 @@ import { MatCardModule } from '@angular/material/card';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { AuthService } from '../../services/auth.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-register',
@@ -29,7 +30,11 @@ export class RegisterComponent {
   errorMessage: string | null = null;
   registerForm!: FormGroup;
 
-  constructor(private fb: FormBuilder, private authService: AuthService) {}
+  constructor(
+    private fb: FormBuilder,
+    private authService: AuthService,
+    private router: Router
+  ) {}
 
   ngOnInit(): void {
     //Called after the constructor, initializing input properties, and the first call to ngOnChanges.
@@ -50,6 +55,7 @@ export class RegisterComponent {
       .then(() => {
         console.log('Account Registered');
         this.errorMessage = null;
+        this.router.navigate(['/']);
       })
       .catch((error) => {
         this.errorMessage = error.message;

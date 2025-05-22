@@ -7,5 +7,6 @@ public record ProjectDto
     string? Description,
     string? Visibility,
     DateTime CreatedAt,
+    DateTime UpdatedAt,
     int OwnerId
 );

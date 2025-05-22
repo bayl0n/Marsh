@@ -22,13 +22,11 @@ public class UsersController(UserService userService, IMapper mapper) : Controll
         if (string.IsNullOrEmpty(firebaseUid))
             return Unauthorized("Missing Firebase UID");
 
-        var user = await _userService.GetByFirebaseUidAsync(firebaseUid);
-        if (user == null)
-            return NotFound("User not found");
-        
-        var userDto = _mapper.Map<UserDto>(user);
+        var email = User.FindFirstValue(ClaimTypes.Email);
+        var user = await _userService.GetOrCreateByFirebaseUidAsync(firebaseUid, email);
 
-        return Ok(userDto);
+        var dto = _mapper.Map<UserDto>(user);
+        return Ok(dto);
     }
 
     [HttpGet("{id:int}")]

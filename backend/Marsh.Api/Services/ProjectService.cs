@@ -39,17 +39,9 @@ public class ProjectService(MarshDbContext context, UserService userService, IMa
     public async Task<List<ProjectDto>?> GetUserProjectsAsync(int userId)
     {
         var projects = await _context.Projects
-            .Where(project => project.Id == userId)
+            .Where(project => project.OwnerId == userId)
             .Select(
-            project => new ProjectDto
-                (
-                    project.Id,
-                    project.Title,
-                    project.Description,
-                    project.Visibility,
-                    project.CreatedAt,
-                    project.OwnerId
-                )
+            project => _mapper.Map<ProjectDto>(project)
             ).ToListAsync();
         
         return projects;
