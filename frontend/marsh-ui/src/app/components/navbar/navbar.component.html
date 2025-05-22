@@ -2,8 +2,8 @@
   <mat-toolbar-row>
     <span class="logo" routerLink="/">Marsh</span>
     <span class="spacer"></span>
-    @if (firebaseUser()) {
-    <button mat-button>{{ appUser()?.username }}</button>
+    @if (appUser$ | async; as u) {
+    <button mat-button>{{ u.username }}</button>
     <button mat-button (click)="OnSignOut()">
       <mat-icon>logout</mat-icon>Sign Out
     </button>

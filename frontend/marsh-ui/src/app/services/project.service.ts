@@ -10,6 +10,6 @@ export class ProjectService {
   private http = inject(HttpClient);
 
   getCurrentProjects() {
-    this.http.get<
+    // this.http.get<
   }
 }

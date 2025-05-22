@@ -8,10 +8,13 @@ import { AuthService } from '../../services/auth.service';
 import { UserService } from '../../services/user.service';
 import { MarshUser } from '../../models/user.model';
 import { MatIconModule } from '@angular/material/icon';
+import { of, switchMap } from 'rxjs';
+import { AsyncPipe, CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-navbar',
   imports: [
+    CommonModule,
     RouterLink,
     MatToolbarModule,
     MatButtonModule,
@@ -23,7 +26,7 @@ import { MatIconModule } from '@angular/material/icon';
 })
 export class NavbarComponent {
   readonly firebaseUser;
-  appUser = signal<MarshUser | null>(null);
+  readonly appUser$;
 
   constructor(
     private authService: AuthService,
@@ -33,21 +36,14 @@ export class NavbarComponent {
       initialValue: null,
     });
 
+    this.appUser$ = this.authService.user$.pipe(
+      switchMap((fbUser) =>
+        fbUser ? this.userService.getCurrentUser() : of<MarshUser | null>(null)
+      )
+    );
+
     effect(() => {
       console.log('User changed:', this.firebaseUser());
-    });
-  }
-
-  ngOnInit(): void {
-    //Called after the constructor, initializing input properties, and the first call to ngOnChanges.
-    //Add 'implements OnInit' to the class.
-    this.userService.getCurrentUser().subscribe({
-      next: (user) => {
-        this.appUser.set(user);
-      },
-      error: (error) => {
-        console.log(error);
-      },
     });
   }
 
